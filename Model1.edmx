@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="workModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="workModelStoreContainer">
+    <EntitySet Name="Detector" EntityType="workModel.Store.Detector" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Employee" EntityType="workModel.Store.Employee" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Post" EntityType="workModel.Store.Post" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Station" EntityType="workModel.Store.Station" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TechProcess" EntityType="workModel.Store.TechProcess" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DetectorTypeSet" EntityType="workModel.Store.DetectorTypeSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PositionSet" EntityType="workModel.Store.PositionSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Post_Detector" Association="workModel.Store.FK_Post_Detector">
+      <End Role="Detector" EntitySet="Detector" />
+      <End Role="Post" EntitySet="Post" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TechProcess_Employee" Association="workModel.Store.FK_TechProcess_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="TechProcess" EntitySet="TechProcess" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Post_Station" Association="workModel.Store.FK_Post_Station">
+      <End Role="Station" EntitySet="Station" />
+      <End Role="Post" EntitySet="Post" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Post_TechProcess" Association="workModel.Store.FK_Post_TechProcess">
+      <End Role="TechProcess" EntitySet="TechProcess" />
+      <End Role="Post" EntitySet="Post" />
+    </AssociationSet>
+    <AssociationSet Name="DetectorTypeDetector" Association="workModel.Store.DetectorTypeDetector">
+      <End Role="DetectorType" EntitySet="DetectorTypeSet" />
+      <End Role="Detector" EntitySet="Detector" />
+    </AssociationSet>
+    <AssociationSet Name="PositionEmployee" Association="workModel.Store.PositionEmployee">
+      <End Role="Position" EntitySet="PositionSet" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Detector">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MakeDate" Type="datetime" Nullable="true" />
+    <Property Name="RemoveDate" Type="datetime" Nullable="true" />
+    <Property Name="DetectorTypeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SecondName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Login" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PositionId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Post">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Station_Id" Type="int" Nullable="false" />
+    <Property Name="Num" Type="int" Nullable="true" />
+    <Property Name="Detector_Id" Type="int" Nullable="false" />
+    <Property Name="TechProcess_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Station">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TechProcess">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TechProcessDate" Type="datetime" Nullable="true" />
+    <Property Name="NextTechProcessDate" Type="datetime" Nullable="true" />
+    <Property Name="Employee_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DetectorTypeSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PositionSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <Association Name="FK_Post_Detector">
+    <End Role="Detector" Type="workModel.Store.Detector" Multiplicity="1" />
+    <End Role="Post" Type="workModel.Store.Post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detector">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="Detector_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TechProcess_Employee">
+    <End Role="Employee" Type="workModel.Store.Employee" Multiplicity="1" />
+    <End Role="TechProcess" Type="workModel.Store.TechProcess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TechProcess">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Post_Station">
+    <End Role="Station" Type="workModel.Store.Station" Multiplicity="1" />
+    <End Role="Post" Type="workModel.Store.Post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Station">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="Station_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Post_TechProcess">
+    <End Role="TechProcess" Type="workModel.Store.TechProcess" Multiplicity="1" />
+    <End Role="Post" Type="workModel.Store.Post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TechProcess">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="TechProcess_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DetectorTypeDetector">
+    <End Role="DetectorType" Type="workModel.Store.DetectorTypeSet" Multiplicity="1" />
+    <End Role="Detector" Type="workModel.Store.Detector" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DetectorType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Detector">
+        <PropertyRef Name="DetectorTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PositionEmployee">
+    <End Role="Position" Type="workModel.Store.PositionSet" Multiplicity="1" />
+    <End Role="Employee" Type="workModel.Store.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="PositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="workModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Detector">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MakeDate" Type="DateTime" Precision="0" />
+          <Property Name="RemoveDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Post_Detector" FromRole="Detector" ToRole="Post" />
+          <NavigationProperty Name="DetectorType" Relationship="workModel.DetectorTypeDetector" FromRole="Detector" ToRole="DetectorType" />
+          <Property Name="DetectorTypeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SecondName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" />
+          <NavigationProperty Name="TechProcess" Relationship="Self.FK_TechProcess_Employee" FromRole="Employee" ToRole="TechProcess" />
+          <Property Name="Login" Type="String" Nullable="true" />
+          <Property Name="Password" Type="String" Nullable="true" />
+          <NavigationProperty Name="Position" Relationship="workModel.PositionEmployee" FromRole="Employee" ToRole="Position" />
+          <Property Name="PositionId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Station_Id" Type="Int32" Nullable="false" />
+          <Property Name="Num" Type="Int32" />
+          <Property Name="Detector_Id" Type="Int32" Nullable="false" />
+          <Property Name="TechProcess_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Detector" Relationship="Self.FK_Post_Detector" FromRole="Post" ToRole="Detector" />
+          <NavigationProperty Name="Station" Relationship="Self.FK_Post_Station" FromRole="Post" ToRole="Station" />
+          <NavigationProperty Name="TechProcess" Relationship="Self.FK_Post_TechProcess" FromRole="Post" ToRole="TechProcess" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Post_Station" FromRole="Station" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="TechProcess">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TechProcessDate" Type="DateTime" Precision="0" />
+          <Property Name="NextTechProcessDate" Type="DateTime" Precision="0" />
+          <Property Name="Employee_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_TechProcess_Employee" FromRole="TechProcess" ToRole="Employee" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Post_TechProcess" FromRole="TechProcess" ToRole="Post" />
+        </EntityType>
+        <Association Name="FK_Post_Detector">
+          <End Role="Detector" Type="Self.Detector" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Detector">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="Detector_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechProcess_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="TechProcess" Type="Self.TechProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TechProcess">
+              <PropertyRef Name="Employee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Station">
+          <End Role="Station" Type="Self.Station" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="Station_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_TechProcess">
+          <End Role="TechProcess" Type="Self.TechProcess" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechProcess">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="TechProcess_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="workEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Detector" EntityType="Self.Detector" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Post" EntityType="Self.Post" />
+          <EntitySet Name="Station" EntityType="Self.Station" />
+          <EntitySet Name="TechProcess" EntityType="Self.TechProcess" />
+          <AssociationSet Name="FK_Post_Detector" Association="Self.FK_Post_Detector">
+            <End Role="Detector" EntitySet="Detector" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechProcess_Employee" Association="Self.FK_TechProcess_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="TechProcess" EntitySet="TechProcess" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Station" Association="Self.FK_Post_Station">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_TechProcess" Association="Self.FK_Post_TechProcess">
+            <End Role="TechProcess" EntitySet="TechProcess" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <EntitySet Name="DetectorTypeSet" EntityType="workModel.DetectorType" />
+          <AssociationSet Name="DetectorTypeDetector" Association="workModel.DetectorTypeDetector">
+            <End Role="DetectorType" EntitySet="DetectorTypeSet" />
+            <End Role="Detector" EntitySet="Detector" />
+          </AssociationSet>
+          <EntitySet Name="PositionSet" EntityType="workModel.Position" />
+          <AssociationSet Name="PositionEmployee" Association="workModel.PositionEmployee">
+            <End Role="Position" EntitySet="PositionSet" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DetectorType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Detector" Relationship="workModel.DetectorTypeDetector" FromRole="DetectorType" ToRole="Detector" />
+        </EntityType>
+        <Association Name="DetectorTypeDetector">
+          <End Type="workModel.DetectorType" Role="DetectorType" Multiplicity="1" />
+          <End Type="workModel.Detector" Role="Detector" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DetectorType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Detector">
+              <PropertyRef Name="DetectorTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="true" />
+          <NavigationProperty Name="Employee" Relationship="workModel.PositionEmployee" FromRole="Position" ToRole="Employee" />
+        </EntityType>
+        <Association Name="PositionEmployee">
+          <End Type="workModel.Position" Role="Position" Multiplicity="1" />
+          <End Type="workModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="PositionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="workModelStoreContainer" CdmEntityContainer="workEntities1">
+    <EntitySetMapping Name="Detector">
+      <EntityTypeMapping TypeName="IsTypeOf(workModel.Detector)">
+        <MappingFragment StoreEntitySet="Detector">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
+          <ScalarProperty Name="RemoveDate" ColumnName="RemoveDate" />
+          <ScalarProperty Name="DetectorTypeId" ColumnName="DetectorTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee">
+      <EntityTypeMapping TypeName="IsTypeOf(workModel.Employee)">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Post">
+      <EntityTypeMapping TypeName="IsTypeOf(workModel.Post)">
+        <MappingFragment StoreEntitySet="Post">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Station_Id" ColumnName="Station_Id" />
+          <ScalarProperty Name="Num" ColumnName="Num" />
+          <ScalarProperty Name="Detector_Id" ColumnName="Detector_Id" />
+          <ScalarProperty Name="TechProcess_Id" ColumnName="TechProcess_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Station">
+      <EntityTypeMapping TypeName="IsTypeOf(workModel.Station)">
+        <MappingFragment StoreEntitySet="Station">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TechProcess">
+      <EntityTypeMapping TypeName="IsTypeOf(workModel.TechProcess)">
+        <MappingFragment StoreEntitySet="TechProcess">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TechProcessDate" ColumnName="TechProcessDate" />
+          <ScalarProperty Name="NextTechProcessDate" ColumnName="NextTechProcessDate" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetectorTypeSet">
+      <EntityTypeMapping TypeName="IsTypeOf(workModel.DetectorType)">
+        <MappingFragment StoreEntitySet="DetectorTypeSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PositionSet">
+      <EntityTypeMapping TypeName="IsTypeOf(workModel.Position)">
+        <MappingFragment StoreEntitySet="PositionSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

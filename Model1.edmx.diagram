@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4cb74c3661ba47d592042863d707c566" Name="Diagram1">
+        <EntityTypeShape EntityType="workModel.Detector" Width="1.5" PointX="2.875" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="workModel.Employee" Width="1.5" PointX="2.625" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="workModel.Post" Width="1.5" PointX="6.625" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="workModel.Station" Width="1.5" PointX="8" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="workModel.TechProcess" Width="1.5" PointX="4.5" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="workModel.FK_Post_Detector" ManuallyRouted="false" />
+        <AssociationConnector Association="workModel.FK_TechProcess_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="workModel.FK_Post_Station" ManuallyRouted="false" />
+        <AssociationConnector Association="workModel.FK_Post_TechProcess" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="workModel.DetectorType" Width="1.5" PointX="0.625" PointY="4.625" />
+        <AssociationConnector Association="workModel.DetectorTypeDetector" />
+        <EntityTypeShape EntityType="workModel.Position" Width="1.5" PointX="0.5" PointY="0.875" />
+        <AssociationConnector Association="workModel.PositionEmployee" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
